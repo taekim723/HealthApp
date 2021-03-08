@@ -782,21 +782,21 @@ ScreenManager :
             pos_hint : {"top" : 0.7, "left": 1}
             size_hint : 1, 0.1
             Image :
-                source : "grandma.png"
+                source : "man.png"
             Image : 
-                source : "senior.png"
+                source : "man.png"
             Image : 
-                source: "bald.png"
+                source: "man.png"
         GridLayout:
             rows : 1
             pos_hint : {"top" : 0.5, "left": 1}
             size_hint : 1, 0.1
             Image : 
-                source : "teacher.png"
+                source : "man.png"
             Image : 
-                source : "grandpa.png"
+                source : "man.png"
             Image : 
-                source : "grandma_2.png"
+                source : "man.png"
             
         GridLayout:
             
@@ -804,11 +804,11 @@ ScreenManager :
             pos_hint : {"top": 0.3 , "left":1}
             size_hint : 1, 0.1
             Image : 
-                source : "grandma_3.png"
+                source : "man.png"
             Image : 
-                source : "beard.png"
+                source : "man.png"
             Image : 
-                source : "beard_2.png"
+                source : "man.png"
 
         
 
