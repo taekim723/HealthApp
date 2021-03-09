@@ -821,7 +821,7 @@ ScreenManager :
                         orientation: 'vertical'
                         MDToolbar:
                             title: 'Health App'
-                            left_action_items: [["menu", lambda x: nav_drawer.toggle_nav_drawer()]]
+                            left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
     
                         Widget:
                         
