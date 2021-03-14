@@ -839,7 +839,7 @@ ScreenManager :
                     spacing: "15dp"
                     padding: "15dp"
                     Image :
-                        source : "제목 없음.png"
+                        source : "skku.png"
                     MDLabel : 
                         text : "    App: Health App"
                         color : (1,1,1,1)
