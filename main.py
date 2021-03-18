@@ -293,7 +293,7 @@ ScreenManager :
                     spacing: "15dp"
                     padding: "15dp"
                     Image :
-                        source : "sung.png"
+                        source : "skku.png"
                     MDLabel : 
                         text : "    App: Health App"
                         color : (1,1,1,1)
