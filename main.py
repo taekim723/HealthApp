@@ -12,8 +12,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.properties import ListProperty, StringProperty, ObjectProperty
-from base import DataBase
-from kivy_garden.zbarcam import ZBarCam
+#from kivy_garden.zbarcam import ZBarCam
+
 
 screen_helper = """
 ScreenManager :
@@ -23,19 +23,319 @@ ScreenManager :
     Text:
     Drawer:
     Name:
-    Upload:
-    Great:
-    Good:
-    Mid:
-    Low:
-    Worse:
-    Color_Dark:
-    Color_Medium:
-    Color_Good:
-    Color_Best:
-    Database:
-    Result:
     QR_Check:
+#: import utils kivy.utils
+#: import MDChips kivymd.uix.chip.MDChip
+#: import ZBarCam kivy_garden.zbarcam.ZBarCam
+#: import ZBarSymbol pyzbar.pyzbar.ZBarSymbol
+ 
+<QR_Check>:
+    name : "qr"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        ZBarCam:
+            id: zbarcam
+            # optional, by default checks all types
+            code_types: ZBarSymbol.QRCODE, ZBarSymbol.EAN13
+        Label:
+            size_hint: None, None
+            size: self.texture_size[0], 50
+            text: ', '.join([str(symbol.data) for symbol in zbarcam.symbols])
+    MDRoundFlatButton:
+        text: "Back"
+        pos_hint : {"center_x":0.7, "center_y":0.1}
+        on_press : 
+            root.manager.current = "drawer"
+
+    
+ 
+<Text>:
+    name : "password"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+        
+    MDTextField:
+    
+        hint_text : "Enter the Password"
+        helper_text: "click if forgotten"
+        helper_text_mode : "on_focus"
+        icon_right:"language-python"
+        password :True
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint : {"center_x" : 0.5, "center_y": 0.5}
+        size_hint_x : None
+        width : 300
+        id : passw
+     
+    MDFloatingActionButton:
+        icon : "login"
+        theme_text_color : "Custom"
+        halign : "center"
+        pos_hint : {"center_x" : 0.5, "center_y" : 0.3}
+        size_hint: (0.15, 0.1)
+        on_press : root.manager.current = "Profile" if passw.text == "tae" else "login"
+        
+<RoundedButton@Button>:
+    background_color : (0,0,0,0)
+    background_normal : ""
+    canvas.before:
+        Color : 
+            rgba : (229/255, 194/255, 0, 1)
+        RoundedRectangle:
+            size : self.size
+            pos : self.pos
+            radius : [60]
+    
+
+<Login>:
+    name: "login"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    MDRoundFlatButton:
+        text : "Welcome to the Health App"
+        pos_hint : {"center_x": 0.5, "center_y": 0.5}
+        on_press: root.manager.current = "menu"
+<MenuScreen>:
+    name: "menu"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    FloatLayout:
+        GridLayout : 
+            rows : 1
+            pos_hint : {"top" : 1, "left": 1}
+            size_hint : 1, 0.1
+        GridLayout:
+            rows : 1
+            pos_hint : {"top" : 0.9, "left": 1}
+            size_hint : 1, 0.15
+            
+            
+        GridLayout:
+            
+            rows : 1
+            pos_hint : {"top": 0.75 , "left":1}
+            size_hint : 1, 0.25
+            Image : 
+                source : "man.png"
+
+        Label : 
+            pos_hint : {"top": 0.5 , "left":1}
+            size_hint : 1, 0.1
+            color : (1,1,1,1)
+            text : "Health Care App"
+            font_style : "Button"
+            color : (0,1,0,1)
+        
+        GridLayout:
+            
+            rows : 1
+            pos_hint : {"top": 0.4 , "left":1}
+            size_hint : 1, 0.4
+
+        
+
+    MDRoundFlatButton:
+        text: "Click to Login"
+        pos_hint : {"center_x":0.5, "center_y":0.2}
+        on_press : root.manager.current = "password"
+<ProfileScreen>:
+    name: "Profile"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    MDLabel :
+        text: "How are you, Minjeong?"
+        font_style : "Button"
+        color : (0,1,0,1)
+        halign : "center"
+    FloatLayout:
+        GridLayout : 
+            rows : 1
+            pos_hint : {"center_x" : 0.6 , "center_y": 0.6}
+            size_hint : 1, 0.15
+            Image : 
+                source : "grandma_1.png"
+    MDRoundFlatButton:
+        text: "Back"
+        pos_hint : {"center_x":0.7, "center_y":0.2}
+        on_press: root.manager.current = "menu"
+        on_press : print("You have clicked to go to Menu")
+    MDRoundFlatButton:
+        text: "Menu"
+        pos_hint : {"center_x":0.3, "center_y":0.2}
+        on_press: root.manager.current = "drawer"
+<Name>:
+    name: "name"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: "15dp"
+        padding: "15dp"
+        MDRoundFlatButton:
+            text: "Name:  Tae Kim"
+            font_stryle : "Subtitle"
+            size_hint_y : None
+        MDRoundFlatButton:
+            text: "Nationality:  South Korea"
+            font_stryle : "Subtitle"
+            size_hint_y : None
+        MDRoundFlatButton:
+            text: "Date of Birth:  1996.08.20"
+            font_stryle : "Subtitle"
+            size_hint_y : None
+        MDRoundFlatButton:
+            text: "Blood Type:  B"
+            font_stryle : "Subtitle"
+            size_hint_y : None
+        
+        ScrollView
+        MDRoundFlatButton:
+            text:"Back"
+            on_press:   
+                root.manager.transition.direction = "right"
+                root.manager.current = "drawer"
+
+
+<Drawer>:
+    name : "drawer"
+    canvas : 
+        Color: 
+            rgb: utils.get_color_from_hex("#FEFEFE")
+        Rectangle :
+            size : self.size
+            pos : self.pos
+    FloatLayout:
+        GridLayout : 
+            rows : 1
+            pos_hint : {"top" : 0.7, "left": 1}
+            size_hint : 1, 0.1
+            Image :
+                source : "grandma.png"
+            Image : 
+                source : "senior.png"
+            Image : 
+                source: "bald.png"
+        GridLayout:
+            rows : 1
+            pos_hint : {"top" : 0.5, "left": 1}
+            size_hint : 1, 0.1
+            Image : 
+                source : "teacher.png"
+            Image : 
+                source : "grandpa.png"
+            Image : 
+                source : "grandma_2.png"
+            
+        GridLayout:
+            
+            rows : 1
+            pos_hint : {"top": 0.3 , "left":1}
+            size_hint : 1, 0.1
+            Image : 
+                source : "grandma_3.png"
+            Image : 
+                source : "beard.png"
+            Image : 
+                source : "beard_2.png"
+
+        
+
+    
+    Screen:
+        NavigationLayout:
+            ScreenManager : 
+                Screen:
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDToolbar:
+                            title: 'Health App'
+                            left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+    
+                        Widget:
+                        
+                        ScrollView
+            MDNavigationDrawer: 
+                id: nav_drawer
+                canvas : 
+                    Color: 
+                        rgb: utils.get_color_from_hex("#FEFEFE")
+                    Rectangle :
+                        size : self.size
+                        pos : self.pos
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: "15dp"
+                    padding: "15dp"
+                    Image :
+                        source : "sung.png"
+                    MDLabel : 
+                        text : "    App: Health App"
+                        color : (1,1,1,1)
+                        font_stryle : "Subtitle"
+                        size_hint_y : None
+                        height: self.texture_size[1]
+                    MDLabel : 
+                        text : "    Email : taekim723@gmail.com"
+                        color : (1,1,1,1)
+                        font_stryle : "Caption"
+                        size_hint_y : None
+                        height: self.texture_size[1]
+
+                    ScrollView:
+                        MDList:
+                            OneLineIconListItem:
+                                text: 'Profile'
+                                color : (1,1,1,1)
+                                on_press : 
+                                    root.manager.current = "name"
+                                IconLeftWidget:
+                                    icon_right_color: app.theme_cls.primary_color
+                                    icon : "face-profile"
+                            
+                            OneLineIconListItem:
+                                text: 'QR_Scan'
+                                color : (1,1,1,1)
+                                on_press :
+                                    root.manager.current = "qr"
+                                IconLeftWidget:
+                                    icon : "qrcode-scan"
+                            OneLineIconListItem:
+                                text: 'Logout'
+                                color : (1,1,1,1)
+                                on_press :
+                                    root.manager.current = "login"
+                                IconLeftWidget:
+                                    icon : "logout"
+                                  
+
+            
+
 """
 class Login(Screen):
     pass
@@ -55,59 +355,9 @@ class Drawer(Screen):
 class Name(Screen):
     pass
 
-class Upload(Screen):
-    pass
-
-class Great(Screen):
-    pass
-class Good(Screen):
-    pass
-class Mid(Screen):
-    pass
-class Low(Screen):
-    pass
-
-class Worse(Screen):
-    pass
-
-class Color_Dark(Screen):
-    pass
-
-class Color_Medium(Screen):
-    pass
-
-class Color_Good(Screen):
-    pass
-
-class Color_Best(Screen):
-    pass
-
-class Database(Screen):
-    color = ObjectProperty(None)
-    second = ObjectProperty(None)
-
-    def submit(self):
-        if self.color.text != "" and self.second.text != "" :
-            db.add_user(self.second.text, self.color.text)
-            self.reset()
-        else :
-            invalidForm()
-    
-    def reset(self):
-        self.color.text = ""
-        self.second.text = ""
-
-    
-class Result(Screen):
-    pass
 
 class QR_Check(Screen):
     pass
-
-    
-    
-
-    
 
 
 sm = ScreenManager()
@@ -117,21 +367,7 @@ sm.add_widget(MenuScreen(name = "menu"))
 sm.add_widget(ProfileScreen(name = "Profile"))
 sm.add_widget(Drawer(name = "drawer"))
 sm.add_widget(Name(name = "name"))
-sm.add_widget(Upload(name = "upload"))
-sm.add_widget(Great(name = "great"))
-sm.add_widget(Good(name = "good"))
-sm.add_widget(Mid(name = "mid"))
-sm.add_widget(Low(name = "low"))
-sm.add_widget(Worse(name = "worse"))
-sm.add_widget(Color_Dark(name = "color_dark"))
-sm.add_widget(Color_Medium(name = "color_medium"))
-sm.add_widget(Color_Good(name = "color_good"))
-sm.add_widget(Color_Best(name = "color_best"))
-sm.add_widget(Database(name = "database"))
-sm.add_widget(Result(name = "result"))
 sm.add_widget(QR_Check(name = "qr"))
-
-db = DataBase("users.txt")
 
 class HealthApp(MDApp):
     def build(self):
@@ -144,3 +380,4 @@ class HealthApp(MDApp):
         screen.add_widget(changescreen)
         return screen
 HealthApp().run()
+
