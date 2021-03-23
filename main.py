@@ -12,7 +12,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.properties import ListProperty, StringProperty, ObjectProperty
-#from kivy_garden.zbarcam import ZBarCam
 
 
 screen_helper = """
@@ -23,38 +22,11 @@ ScreenManager :
     Text:
     Drawer:
     Name:
-    QR_Check:
 #: import utils kivy.utils
 #: import MDChips kivymd.uix.chip.MDChip
-#: import ZBarCam kivy_garden.zbarcam.ZBarCam
-#: import ZBarSymbol pyzbar.pyzbar.ZBarSymbol
  
-<QR_Check>:
-    name : "qr"
-    canvas : 
-        Color: 
-            rgb: utils.get_color_from_hex("#FEFEFE")
-        Rectangle :
-            size : self.size
-            pos : self.pos
-    BoxLayout:
-        orientation: 'vertical'
-        ZBarCam:
-            id: zbarcam
-            # optional, by default checks all types
-            code_types: ZBarSymbol.QRCODE, ZBarSymbol.EAN13
-        Label:
-            size_hint: None, None
-            size: self.texture_size[0], 50
-            text: ', '.join([str(symbol.data) for symbol in zbarcam.symbols])
-    MDRoundFlatButton:
-        text: "Back"
-        pos_hint : {"center_x":0.7, "center_y":0.1}
-        on_press : 
-            root.manager.current = "drawer"
 
-    
- 
+   
 <Text>:
     name : "password"
     canvas : 
@@ -317,14 +289,7 @@ ScreenManager :
                                 IconLeftWidget:
                                     icon_right_color: app.theme_cls.primary_color
                                     icon : "face-profile"
-                            
-                            OneLineIconListItem:
-                                text: 'QR_Scan'
-                                color : (1,1,1,1)
-                                on_press :
-                                    root.manager.current = "qr"
-                                IconLeftWidget:
-                                    icon : "qrcode-scan"
+                          
                             OneLineIconListItem:
                                 text: 'Logout'
                                 color : (1,1,1,1)
@@ -356,9 +321,6 @@ class Name(Screen):
     pass
 
 
-class QR_Check(Screen):
-    pass
-
 
 sm = ScreenManager()
 sm.add_widget(Text(name = "password"))
@@ -367,7 +329,6 @@ sm.add_widget(MenuScreen(name = "menu"))
 sm.add_widget(ProfileScreen(name = "Profile"))
 sm.add_widget(Drawer(name = "drawer"))
 sm.add_widget(Name(name = "name"))
-sm.add_widget(QR_Check(name = "qr"))
 
 class HealthApp(MDApp):
     def build(self):
